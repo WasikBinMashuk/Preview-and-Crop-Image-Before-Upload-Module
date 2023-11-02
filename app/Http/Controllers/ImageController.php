@@ -19,30 +19,20 @@ class ImageController extends Controller
 
     public function ImageUpload(Request $request)
     {
-        // dd($request->image);
-        $image = $request->image;
-
-        list($type, $image) = explode(';', $image);
-        list(, $image)      = explode(',', $image);
-        // dd($type);
-        $image = base64_decode($image);
+        // $image = $request->image;
+        // list($type, $image) = explode(';', $image);
+        // list(, $image)      = explode(',', $image);
+        // $image = base64_decode($image);
+        $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->image));
         $image_name = time() . '.png';
-        // dd($image_name);
+
         $path = public_path('images/' . $image_name);
 
         file_put_contents($path, $image);
 
-        // return response()->json(['status' => true]);
-
-        // if ($request->has('image')) {
-        //     $imageName =  time() . '.' . $request->image->extension();
-        //     ImageIntervention::make($request->image)->resize(300, 300)->save('images/' . $imageName);
-        // } else {
-        //     $imageName = null;
-        // }
-
         Image::create([
             'image' => $image_name,
         ]);
+        // return response()->json(['status' => true]);
     }
 }
