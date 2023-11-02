@@ -94,6 +94,7 @@
         var resize = $('#upload-demo').croppie({
             enableExif: true,
             enableOrientation: true,
+            // enableResize: true, //enables resizing
             viewport: {
                 width: 200,
                 height: 200,
